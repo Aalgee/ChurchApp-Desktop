@@ -1,0 +1,311 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using LogicLayer;
+using DataObjects;
+
+namespace PresentationLayer
+{
+    /// <summary>
+    /// Interaction logic for cntrlFacilities.xaml
+    /// </summary>
+    public partial class cntrlFacilities : UserControl
+    {
+        IFacilityManager _facilityManager;
+        IUserManager _userManager;
+        User _user;
+        bool _addMode = false;
+
+        // This is the constructor for this class
+        public cntrlFacilities(User user)
+        {
+            InitializeComponent();
+            _user = user;
+            _userManager = new UserManager();
+            _facilityManager = new FacilityManager();
+
+            populateAllFacilitiesDataGrid();
+
+            
+            btnEdit.Visibility = Visibility.Hidden;
+            btnSave.Visibility = Visibility.Hidden;
+            btnAddNew.Visibility = Visibility.Hidden;
+            btnReserveFacility.Visibility = Visibility.Hidden;
+
+            // If the user is a Pastor or manager they can see and use the add new facilities button.
+            if (checkUserRoles())
+            {
+                btnAddNew.Visibility = Visibility.Visible;
+            }
+
+            // If the user is a member they can see and use the make facility reservations button
+            if (checkUserMember())
+            {
+                btnReserveFacility.Visibility = Visibility.Visible;
+            }
+        }
+
+        // This private helper method checks to see if the user has the role of either Manager or Pastor and returns true
+        // or false based upon the results
+        private bool checkUserRoles()
+        {
+            bool isApproved = false;
+            List<string> roles = _userManager.RetrievePersonRoles(_user.PersonID);
+            foreach (var r in roles)
+            {
+                if (r == "Manager" || r == "Pastor")
+                {
+                    isApproved = true;
+                }
+                
+            }
+            return isApproved;
+        }
+
+        // This private helper method check to see if the current user has the member role and returns either true or false depending on
+        // the result
+        private bool checkUserMember()
+        {
+            bool isMember = false;
+            List<string> roles = _userManager.RetrievePersonRoles(_user.PersonID);
+            foreach(var r in roles)
+            {
+                if(r == "Member")
+                {
+                    isMember = true;
+                }
+            }
+            return isMember;
+        }
+            
+        // This method populates the All Facilities data grid with relevant data from the database
+        private void populateAllFacilitiesDataGrid()
+        {
+            try
+            {
+                dgAllFacilities.ItemsSource = _facilityManager.RetrieveAllFacilitiesByActive();
+            }
+            catch (Exception) { }
+        }
+
+        // When a selection change in the all facilities data grid occurs this event fires.
+        private void DgAllFacilities_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _addMode = false;
+            try
+            {
+                if (null != dgAllFacilities.SelectedItem)
+                {
+                    makeTextFieldsReadOnly();
+                    Facility facility = (Facility)dgAllFacilities.SelectedItem;
+                    txtDescription.Text = facility.Description;
+                    txtFacilityID.Text = facility.FacilityID.ToString();
+                    txtFacilityName.Text = facility.FacilityName;
+                    txtFacilityType.Text = facility.FacilityType;
+                    txtPricePerHour.Text = facility.PricePerHour.ToString();
+                    if (checkUserRoles())
+                    {
+                        btnEdit.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        // This private helper method makes all of the text fields ion this control read only.
+        private void makeTextFieldsReadOnly()
+        {
+            txtDescription.IsReadOnly = true;
+            txtFacilityID.IsReadOnly = true;
+            txtFacilityName.IsReadOnly = true;
+            txtFacilityType.IsReadOnly = true;
+            txtPricePerHour.IsReadOnly = true;
+        }
+
+        // This event is fired when the columns for the all facilities data grid are auto generated. This is where
+        // the data grid and column headers are properly formated
+        private void DgAllFacilities_AutoGeneratedColumns(object sender, EventArgs e)
+        {
+            dgAllFacilities.Columns.RemoveAt(5);
+            dgAllFacilities.Columns.RemoveAt(2);
+
+            dgAllFacilities.Columns[0].Header = "Facility ID";
+            dgAllFacilities.Columns[1].Header = "Facility Name";
+            dgAllFacilities.Columns[2].Header = "Price Per Hour";
+            dgAllFacilities.Columns[3].Header = "Facility Type";
+        }
+
+        // This event handler is fired when the Add New Facility button is clicked. this clears the text fields and
+        // gets everything in order to add a new Facility.
+        private void BtnAddNew_Click(object sender, RoutedEventArgs e)
+        {
+            clearTextFields();
+            makeTextFieldsNotReadOnly();
+            populateAllFacilitiesDataGrid();
+            btnEdit.Visibility = Visibility.Hidden;
+            btnSave.Visibility = Visibility.Visible;
+            _addMode = true;
+            txtFacilityID.IsEnabled = false;
+        }
+
+        // This makes the text fieds not read only.
+        private void makeTextFieldsNotReadOnly()
+        {
+            txtDescription.IsReadOnly = false;
+            //txtFacilityID.IsReadOnly = false;
+            txtFacilityName.IsReadOnly = false;
+            txtFacilityType.IsReadOnly = false;
+            txtPricePerHour.IsReadOnly = false;
+            
+        }
+
+        // This helper method clears the text boxes in this user control.
+        private void clearTextFields()
+        {
+            txtDescription.Clear();
+            txtFacilityID.Clear();
+            txtFacilityName.Clear();
+            txtFacilityType.Clear();
+            txtPricePerHour.Clear();
+        }
+
+        // This event handler is fired when the edit Facilty button is clicked. It makes the text boxes able to edit and makes
+        // the save button visible so that the user can edit the currently selected facility.
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            btnEdit.Visibility = Visibility.Hidden;
+            btnSave.Visibility = Visibility.Visible;
+            makeTextFieldsNotReadOnly();
+            txtFacilityID.IsReadOnly = true;
+            _addMode = false;
+        }
+
+        // This event handler is fired when The save button is clicked. It takes all the information from the text boxes and uses
+        // it to either edit a facility or create a new one.
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            
+            
+            Facility oldFacility = new Facility();
+            if (null != dgAllFacilities.SelectedItem)
+            {
+                oldFacility = (Facility)dgAllFacilities.SelectedItem;
+            }
+            if (txtDescription.Text == "")
+            {
+                MessageBox.Show("You must enter a Description");
+                txtDescription.Focus();
+                return;
+            }
+            if (txtFacilityName.Text == "")
+            {
+                MessageBox.Show("You must enter a Facility Name");
+                txtFacilityName.Focus();
+                return;
+            }
+            if (txtFacilityType.Text == "")
+            {
+                MessageBox.Show("You must enter a Facility Type");
+                txtFacilityType.Focus();
+                return;
+            }
+            if (txtPricePerHour.Text == "")
+            {
+                MessageBox.Show("You must enter a Price Per Hour");
+                txtPricePerHour.Focus();
+                return;
+            }
+            try
+            {
+                decimal.Parse(txtPricePerHour.Text);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("You must enter a number in the Price Per Hour field");
+                txtPricePerHour.Focus();
+                return;
+            }
+            if (txtPricePerHour.Text == "")
+            {
+                MessageBox.Show("You must enter a Price Per Hour"); 
+                txtPricePerHour.Focus();
+                return;
+            }
+            Facility newFacility = new Facility()
+            {
+                Description = txtDescription.Text,
+                FacilityName = txtFacilityName.Text,
+                PricePerHour = decimal.Parse(txtPricePerHour.Text),
+                FacilityType = txtFacilityType.Text,
+                //Active = true
+            };
+            if (_addMode)
+            {
+                if (_facilityManager.AddFacility(newFacility))
+                {
+                    MessageBox.Show("Created Facility: " + newFacility.FacilityName);
+                    btnSave.Visibility = Visibility.Hidden;
+                    btnAddNew.Visibility = Visibility.Visible;
+                    _addMode = false;
+                    populateAllFacilitiesDataGrid();
+                    txtFacilityID.IsEnabled = true;
+                    clearTextFields();
+                }
+            }
+            else
+            {
+                if (_facilityManager.EditFacility(oldFacility, newFacility))
+                {
+                    MessageBox.Show("Edited Facility: " + newFacility.FacilityName);
+                    btnSave.Visibility = Visibility.Hidden;
+                    populateAllFacilitiesDataGrid();
+                    clearTextFields();
+                }
+            }
+        }
+
+        // This event handler is fired when the reserve facility button is clicked. It shows the reserve facility form.
+        private void BtnReserveFacility_Click(object sender, RoutedEventArgs e)
+        {
+            if (null != dgAllFacilities.SelectedItem)
+            {
+                frmReserve reserve = new frmReserve(this, _user, (Facility)dgAllFacilities.SelectedItem);
+                reserve.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("You must make a facility Selection");
+            }
+        }
+
+        // This event handler is fired when the view my reservations button is clicked. It displays the my reservations form.
+        private void BtnViewMyReservations_Click(object sender, RoutedEventArgs e)
+        {
+            frmFacilitySchedule facilitySchedule = new frmFacilitySchedule(true, _user);
+            facilitySchedule.ShowDialog();
+        }
+        
+        // This is the event handler for the Facility Schedule button. When this button is clicked the Facility Schedule form is loaded.
+        private void BtnFacilitySchedule_Click(object sender, RoutedEventArgs e)
+        {
+            frmFacilitySchedule facilitySchedule = new frmFacilitySchedule(false, _user);
+            facilitySchedule.ShowDialog();
+        }
+
+    }
+}

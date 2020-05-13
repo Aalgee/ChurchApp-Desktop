@@ -1,0 +1,13 @@
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\ChurchAppTests.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\ChurchAppTests.pdb
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\bin\Release\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\obj\Release\ChurchAppTests.csproj.CoreCompileInputs.cache
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\obj\Release\ChurchAppTests.csproj.CopyComplete
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\obj\Release\ChurchAppTests.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\ChurchAppTests\obj\Release\ChurchAppTests.pdb

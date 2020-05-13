@@ -1,0 +1,11 @@
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\LogicLayer.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\LogicLayer.pdb
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\DataAccessLayer.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\DataObjects.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\DataAccessLayer.pdb
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\bin\Release\DataObjects.pdb
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\obj\Release\LogicLayer.csprojAssemblyReference.cache
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\obj\Release\LogicLayer.csproj.CoreCompileInputs.cache
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\obj\Release\LogicLayer.csproj.CopyComplete
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\obj\Release\LogicLayer.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\LogicLayer\obj\Release\LogicLayer.pdb

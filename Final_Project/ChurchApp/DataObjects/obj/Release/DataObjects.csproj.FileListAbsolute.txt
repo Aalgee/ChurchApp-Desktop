@@ -1,0 +1,5 @@
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\DataObjects\bin\Release\DataObjects.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\DataObjects\bin\Release\DataObjects.pdb
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\DataObjects\obj\Release\DataObjects.csproj.CoreCompileInputs.cache
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\DataObjects\obj\Release\DataObjects.dll
+E:\School\Fall_2019\.NET_II\Final_Project\ChurchApp\DataObjects\obj\Release\DataObjects.pdb
